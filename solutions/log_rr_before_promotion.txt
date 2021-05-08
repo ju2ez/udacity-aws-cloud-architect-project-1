@@ -1,0 +1,80 @@
+[ec2-user@ip-10-2-11-164 ~]$ mysql connect -h replica-db-udacity.c9rcl4lsfh8j.us-east-1.rds.amazonaws.com -u admin -p
+Enter password: 
+ERROR 1049 (42000): Unknown database 'connect'
+[ec2-user@ip-10-2-11-164 ~]$ mysql #-h replica-db-udacity.c9rcl4lsfh8j.us-east-1.rds.amazonaws.com -u admin -p        
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+[ec2-user@ip-10-2-11-164 ~]$ 
+[ec2-user@ip-10-2-11-164 ~]$ 
+[ec2-user@ip-10-2-11-164 ~]$ 
+[ec2-user@ip-10-2-11-164 ~]$ 
+[ec2-user@ip-10-2-11-164 ~]$ 
+[ec2-user@ip-10-2-11-164 ~]$ mysql -h replica-db-udacity.c9rcl4lsfh8j.us-east-1.rds.amazonaws.com -u admin -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.20 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> 
+MySQL [(none)]> 
+MySQL [(none)]> 
+MySQL [(none)]> 
+MySQL [(none)]> 
+MySQL [(none)]> USE udacity
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [udacity]> SHOW TABLES;
++-------------------+
+| Tables_in_udacity |
++-------------------+
+| pet               |
++-------------------+
+1 row in set (0.00 sec)
+
+MySQL [udacity]> INSERT INTO pet ('Test')
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Test')' at line 1
+MySQL [udacity]> INSERT INTO pet VALUES('Test);
+    '> ;
+    '> Ctrl-C -- exit!
+Aborted
+[ec2-user@ip-10-2-11-164 ~]$ mysql -h replica-db-udacity.c9rcl4lsfh8j.us-east-1.rds.amazonaws.com -u admin -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.20 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> USE udacity
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [udacity]> SHOW TABLES;
++-------------------+
+| Tables_in_udacity |
++-------------------+
+| pet               |
++-------------------+
+1 row in set (0.00 sec)
+
+MySQL [udacity]> iNSERT INTO pet VALUES('test', 'test', 'test', "test", "test", NULL);
+ERROR 1290 (HY000): The MySQL server is running with the --read-only option so it cannot execute this statement
+MySQL [udacity]> SELECT * FROM pet
+    -> ;
++----------+-------+---------+------+------------+-------+
+| name     | owner | species | sex  | birth      | death |
++----------+-------+---------+------+------------+-------+
+| puffball | Diane | hamster | f    | 1992-10-03 | NULL  |
++----------+-------+---------+------+------------+-------+
+1 row in set (0.01 sec)
+
+MySQL [udacity]> 
