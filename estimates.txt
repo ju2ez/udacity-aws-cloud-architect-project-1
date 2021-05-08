@@ -1,29 +1,29 @@
 Recovery time objective (RTO) and recovery point objective (RPO) are two key metrics to consider when developing a DR (disaster recovery) plan
 
-RTO represents how many hours it takes you to return to a working state after a disaster.
+Both should be adjustet w.r.t business needs by developing a well-fitting strategy. 
 
-RPO, which is also expressed in hours, represents how much data you could lose when a disaster happens. For example, an RPO of 1 hour means that you could lose up to 1 hour’s worth of data when a disaster occurs.
+RTO is defined by the organization. It is the maximum acceptable delay between the interruption of service and restoration of service.
+This determines what is considered an acceptable time window when service is unavailable.
+
+RPO is the maximum acceptable amount of time since the last data recovery point.
+This determines what is considered an accepatable loss of data beween the last recovery point and the interruption of service.
 
 
-1. Minimum RTO for a single AZ outage
+1. Minimum Recovery Time Objective (RTO) for a single availability zone (AZ) outage:
     * In case of single AZ outage, minimum RTO would be to get updated DNS changes. In case of Multi-AZ deployment, standby instance is already running and data is replicated synchronously. This ensures quick recovery.
 
-2. Minimum RTO for a single region outage
+2. Minimum RTO for a single region outage:
     * In this case, following factors will be considered:
         i) Time to bring read replica as a standalone primary instance: This typically takes 15-20 minutes.
         ii) Time to apply new DNS changes in application to connect to new end point. Depending upon application design this can take anywhere from 15-120 minutes. If application is using centralized key/value management like Hashicorp Vault, change can be done only at one place.
-    * To summarize, it can take minimum 45-60 minutes for RTO.
+    * In summary, it can take minimum 45-60 minutes for RTO for a single region outage.
 
 3. Minimum RPO for a single AZ outage
     * In Multi-AZ scenario, automatic backups are enabled. It means AWS will take full snapshot once a day.
-    * AWS also does transactional log backups every 5 minutes.
-    * However there are other considerations also to be made.
-        i) Accidental database deletion: In order to avoid it, we need to enable database deletion protection. Also, add explicit deny policy at IAM level.
-        ii) Failure to take auto snapshots: Take manual snapshots.
-    * Considering all of this, minimum RPO for a single AZ is 5 minutes.
+    * AWS also does transactional log backups every 5 minutes which means that the minimum RPO for a single AZ is 5 minutes which means a maximum of 5 minutes accepatable data loss.
 
 4. Minimum RPO for a single region outage
     * In Multi-AZ, Multi-region mode, database is updated asynchronously between Primary and read replica.
     * During initial setup and installation time, it takes minimum 15-20 minutes for system to get into Available state.
-    * Considering this, minimum RPO for single region outage is around 15 minutes.
+    * Considering this, minimum RPO for single region outage is around 15 to 20 minutes.
 
